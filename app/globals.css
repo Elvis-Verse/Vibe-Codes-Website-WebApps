@@ -1,0 +1,146 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+
+  /* Dark section surface (charcoal panels used across the site) */
+  --color-charcoal: var(--charcoal);
+  --color-charcoal-foreground: var(--charcoal-foreground);
+  --color-charcoal-muted: var(--charcoal-muted);
+
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
+  --radius-xl: calc(var(--radius) + 6px);
+}
+
+:root {
+  color-scheme: light;
+
+  /* Warm off-white paper */
+  --background: oklch(0.972 0.004 85);
+  --foreground: oklch(0.205 0.006 60);
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.205 0.006 60);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.205 0.006 60);
+
+  /* Charcoal primary */
+  --primary: oklch(0.235 0.006 60);
+  --primary-foreground: oklch(0.975 0.004 85);
+
+  --secondary: oklch(0.935 0.005 85);
+  --secondary-foreground: oklch(0.235 0.006 60);
+
+  --muted: oklch(0.945 0.005 85);
+  --muted-foreground: oklch(0.505 0.006 60);
+
+  /* Amber filament accent */
+  --accent: oklch(0.76 0.142 72);
+  --accent-foreground: oklch(0.235 0.02 60);
+
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.895 0.005 85);
+  --input: oklch(0.895 0.005 85);
+  --ring: oklch(0.76 0.142 72);
+
+  /* Charcoal section tokens */
+  --charcoal: oklch(0.205 0.006 60);
+  --charcoal-foreground: oklch(0.965 0.004 85);
+  --charcoal-muted: oklch(0.72 0.006 60);
+
+  --radius: 0.375rem;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  ::selection {
+    background: var(--accent);
+    color: var(--accent-foreground);
+  }
+}
+
+@layer utilities {
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .animate-fade-up {
+    animation: fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    .animate-fade-up {
+      animation: none;
+    }
+  }
+
+  .form-input {
+    width: 100%;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--card);
+    padding: 0.75rem 0.875rem;
+    font-size: 0.9375rem;
+    color: var(--foreground);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .form-input::placeholder {
+    color: var(--muted-foreground);
+  }
+  .form-input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--accent) 30%, transparent);
+  }
+}
